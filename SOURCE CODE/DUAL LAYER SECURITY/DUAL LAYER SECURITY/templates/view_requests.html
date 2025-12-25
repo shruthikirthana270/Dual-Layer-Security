@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>View Requests - Owner Module</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: url('static/images/background.jpg') no-repeat center center/cover;
+            color: #fff;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 50, 0.6);
+            z-index: 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #001f4d;
+            z-index: 2;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 1.6rem;
+            color: #00d4ff;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        header a:hover {
+            color: #00d4ff;
+        }
+
+        main {
+            position: relative;
+            z-index: 1;
+            padding: 3rem 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        h2 {
+            color: #00d4ff;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+            background: rgba(0, 50, 100, 0.7);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+        }
+
+        th,
+        td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+            word-break: break-word;
+        }
+
+        th {
+            background: #001f4d;
+            color: #00d4ff;
+        }
+
+        td {
+            color: #f0f0f0;
+        }
+
+        a.accept,
+        a.reject {
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        a.accept {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        a.reject {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        a.accept:hover,
+        a.reject:hover {
+            opacity: 0.85;
+        }
+
+        p {
+            color: #00d4ff;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Owner Module - Dual Layer Security</h1>
+        <nav>
+            <a href="/owner_dashboard">Home</a>
+            <a href="/uploaded_files">Uploaded Files</a>
+            <a href="/view_requests">View Requests</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        {% if pending_requests %}
+        <h2>Pending Requests</h2>
+        <table>
+            <tr>
+                <th>User Email</th>
+                <th>File</th>
+                <th>Request Date</th>
+                <th>Action</th>
+            </tr>
+            {% for r in pending_requests %}
+            <tr>
+                <td>{{ r.user_email }}</td>
+                <td>{{ r.filename if r.filename else 'File deleted' }}</td>
+                <td>{{ r.request_date }}</td>
+                <td>
+                    <a class="accept" href="/accept_request/{{ r.id }}">Accept</a>
+                    <a class="reject" href="/reject_request/{{ r.id }}">Reject</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+
+        {% if accepted_requests %}
+        <h2>Accepted Requests</h2>
+        <table>
+            <tr>
+                <th>User Email</th>
+                <th>File</th>
+                <th>Request Date</th>
+                <th>Action</th>
+            </tr>
+            {% for r in accepted_requests %}
+            <tr>
+                <td>{{ r.user_email }}</td>
+                <td>{{ r.filename if r.filename else 'File deleted' }}</td>
+                <td>{{ r.request_date }}</td>
+                <td>
+                    <a class="reject" href="/reject_request/{{ r.id }}">Reject</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+
+        {% if rejected_requests %}
+        <h2>Rejected Requests</h2>
+        <table>
+            <tr>
+                <th>User Email</th>
+                <th>File</th>
+                <th>Request Date</th>
+                <th>Action</th>
+            </tr>
+            {% for r in rejected_requests %}
+            <tr>
+                <td>{{ r.user_email }}</td>
+                <td>{{ r.filename if r.filename else 'File deleted' }}</td>
+                <td>{{ r.request_date }}</td>
+                <td>
+                    <a class="accept" href="/accept_request/{{ r.id }}">Accept</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+
+        {% if not pending_requests and not accepted_requests and not rejected_requests %}
+        <p>No requests found.</p>
+        {% endif %}
+    </main>
+</body>
+
+</html>

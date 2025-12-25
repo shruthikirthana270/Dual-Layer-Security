@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dual-Layer Security System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Reset & Base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: url('static/images/background.jpg') no-repeat center center/cover;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Overlay for readability */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 0;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+      position: relative;
+      z-index: 1;
+      background-color: rgba(0, 0, 0, 0.3);
+      animation: fadeInDown 1.5s ease forwards;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: #00d4ff;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px #00d4ff;
+    }
+
+    /* Main Section */
+    main {
+      text-align: center;
+      padding: 4rem 2rem;
+      position: relative;
+      z-index: 1;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    main h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #00d4ff;
+      opacity: 0;
+      animation: fadeUp 1.5s ease forwards;
+    }
+
+    main h2 {
+      font-size: 1.6rem;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      color: #00d4ff;
+      opacity: 0;
+      animation: fadeUp 1.5s ease forwards;
+      animation-delay: 1s;
+    }
+
+    main p {
+      font-size: 1.1rem;
+      max-width: 850px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.6;
+      color: #f0f0f0;
+      opacity: 0;
+      animation: fadeIn 2s ease forwards;
+      animation-delay: 0.8s;
+    }
+
+    /* Buttons */
+    .buttons {
+      margin-top: 2.5rem;
+      animation: fadeUp 2s ease forwards;
+      animation-delay: 1.5s;
+    }
+
+    .btn {
+      display: inline-block;
+      margin: 10px;
+      padding: 1rem 2.5rem;
+      background: linear-gradient(90deg, #00d4ff, #0066ff);
+      color: #fff;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.7);
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.3);
+      transition: left 0.4s ease;
+      border-radius: 50px;
+    }
+
+    .btn:hover::after {
+      left: 100%;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1.2rem;
+      background-color: rgba(0, 0, 0, 0.6);
+      font-size: 0.9rem;
+      position: relative;
+      z-index: 1;
+      animation: fadeInUp 1.5s ease forwards;
+    }
+
+    /* Keyframes */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeInDown {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      main h1 {
+        font-size: 2rem;
+      }
+
+      main p {
+        font-size: 1rem;
+      }
+
+      .btn {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">Dual-Layer Security System</div>
+  </header>
+
+  <!-- Main Section -->
+  <main>
+    <h1>Welcome to Dual-Layer Security System</h1>
+    <p>
+      This project provides a <strong>secure data sharing mechanism</strong> using a
+      dual-layer protection model that combines <strong>Cryptography</strong> and
+      <strong>Steganography</strong>. It ensures that even if the data is intercepted,
+      it remains unreadable and hidden within an image.
+    </p>
+
+    <h2>About the Project</h2>
+    <p>
+      The system allows two main roles: <strong>Owner</strong> and <strong>User</strong>.
+      The Owner uploads files, which are first encrypted using cryptographic algorithms and
+      then hidden inside an image using steganography. The User can request access to these files,
+      and upon the Owner’s approval, securely download and decrypt them.
+    </p>
+
+    <div class="buttons">
+      <a href="/owner" class="btn">Owner</a>
+      <a href="/user" class="btn">User</a>
+    </div>
+  </main>
+</body>
+
+</html>

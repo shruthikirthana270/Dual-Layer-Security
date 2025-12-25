@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard - Dual Layer Security</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: url('static/images/background.jpg') no-repeat center center/cover;
+            color: #fff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 50, 0.6);
+            z-index: 0;
+        }
+
+        header {
+            position: relative;
+            z-index: 1;
+            background-color: #001f4d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            flex-wrap: wrap;
+        }
+
+        header h1 {
+            color: #00d4ff;
+            font-size: 1.6rem;
+        }
+
+        header nav a {
+            text-decoration: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-left: 1rem;
+            transition: 0.3s;
+            color: #fff;
+            background-color: #001f4d;
+        }
+
+        header nav a:hover {
+            background-color: #00d4ff;
+            color: #001f4d;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            padding: 3rem 2rem;
+            max-width: 900px;
+            margin: auto;
+            flex: 1;
+            animation: fadeInUp 1s ease;
+        }
+
+        h2 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+        }
+
+        h4 {
+            color: #00d4ff;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(0, 50, 100, 0.7);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+        }
+
+        th,
+        td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+            word-break: break-word;
+            color: #f0f0f0;
+        }
+
+        th {
+            background-color: #001f4d;
+            color: #00d4ff;
+        }
+
+        a.btn-primary {
+            background-color: #28a745;
+            color: #fff;
+            text-decoration: none;
+            padding: 0.3rem 0.7rem;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        a.btn-primary:hover {
+            opacity: 0.85;
+        }
+
+        p.text-muted {
+            color: #00d4ff;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        footer {
+            background-color: #001f4d;
+            color: #00d4ff;
+            text-align: center;
+            padding: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        footer a {
+            color: #00d4ff;
+            text-decoration: none;
+            margin: 0 0.5rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            background-color: #001f4d;
+            transition: 0.3s;
+        }
+
+        footer a:hover {
+            background-color: #00d4ff;
+            color: #001f4d;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            table th,
+            table td {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>User Module - Dual Layer Security</h1>
+        <nav>
+            <a href="/user_dashboard">Home</a>
+            <a href="/view_responses">View Responses</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Welcome, {{ user.name }}!</h2>
+
+        <h4>Available Files</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>File Name</th>
+                    <th>Owner</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in files %}
+                <tr>
+                    <td>{{ file.filename }}</td>
+                    <td>{{ file.owner_email }}</td>
+                    <td>
+                        <a href="/request_file/{{ file.id }}" class="btn-primary">Request</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% if files|length == 0 or (files|length == requests|length) %}
+        <p class="text-muted">No files to request.</p>
+        {% endif %}
+    </div>
+
+    <footer>
+        © 2025 Dual-Layer Security Project —
+        <a href="/user_dashboard">Home</a>
+        <a href="/view_responses">Responses</a>
+        <a href="/logout">Logout</a>
+    </footer>
+</body>
+
+</html>

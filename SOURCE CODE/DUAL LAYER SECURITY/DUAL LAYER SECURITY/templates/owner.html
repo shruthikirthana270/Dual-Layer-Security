@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Owner Dashboard - Dual Layer Security</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+            overflow-x: hidden;   /* ✅ no horizontal scroll */
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: url('static/images/background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            color: #fff;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 50, 0.6);
+            z-index: 0;
+        }
+
+        header {
+            background: rgba(0, 31, 77, 0.95);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            z-index: 2;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 1.6rem;
+            color: #00d4ff;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        header a:hover {
+            color: #00d4ff;
+        }
+
+        main {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+            padding: 3rem 2rem;
+            overflow-y: auto;   /* ✅ only vertical scroll */
+            animation: fadeInUp 1s ease;
+        }
+
+        h2, h3 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+        }
+
+        form {
+            background: rgba(0, 50, 100, 0.7);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+            max-width: 500px;
+        }
+
+        input[type="file"],
+        button {
+            width: 100%;
+            margin-top: 1rem;
+            padding: 0.6rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        input[type="file"] {
+            background: #e0f7ff;
+            color: #001f4d;
+        }
+
+        button {
+            background: #00d4ff;
+            color: #001f4d;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #009fc4;
+            color: white;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 1.5rem;
+            background: rgba(0, 50, 100, 0.8);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 0.8rem;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+            vertical-align: top;
+        }
+
+        th {
+            background: #001f4d;
+            color: #00d4ff;
+            text-align: left;
+            width: 25%;
+        }
+
+        td {
+            color: #f0f0f0;
+            word-wrap: break-word;
+        }
+
+        img {
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: rgba(0, 31, 77, 0.95);
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 2;
+            margin-top: auto;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Owner Module - Dual Layer Security</h1>
+        <nav>
+            <a href="/owner_dashboard">Home</a>
+            <a href="/uploaded_files">Uploaded Files</a>
+            <a href="/view_requests">View Requests</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Welcome, {{ owner.name }}</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <p class="{{ category }}">{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <h3>Upload Text File and Cover Image</h3>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <label>Select text file:</label>
+            <input type="file" name="file" required>
+            <label>Select cover image (PNG):</label>
+            <input type="file" name="cover" required>
+            <button type="submit">Upload</button>
+        </form>
+
+        {% if show_process %}
+        <h3>🔐 Encryption & Steganography Process</h3>
+        <table>
+            <tr>
+                <th>Original File</th>
+                <td>{{ original_filename }}</td>
+            </tr>
+            <tr>
+                <th>AES Key (Hex)</th>
+                <td>{{ key_hex }}</td>
+            </tr>
+            <tr>
+                <th>IV (Hex)</th>
+                <td>{{ iv_hex }}</td>
+            </tr>
+            <tr>
+                <th>Ciphertext (Hex)</th>
+                <td>{{ cipher_hex }}</td>
+            </tr>
+            <tr>
+                <th>Steganography Image</th>
+                <td><img src="data:image/png;base64,{{ stego_base64 }}" alt="Stego Image" width="200"></td>
+            </tr>
+        </table>
+        {% endif %}
+    </main>
+
+    <footer>
+        © 2025 Dual-Layer Security Project — Owner Dashboard
+    </footer>
+</body>
+</html>

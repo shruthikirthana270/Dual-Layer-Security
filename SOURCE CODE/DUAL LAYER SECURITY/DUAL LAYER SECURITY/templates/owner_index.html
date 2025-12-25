@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Module - Dual-Layer Security</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: url('static/images/background.jpg') no-repeat center center/cover;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 50, 0.5); /* subtle dark blue overlay */
+            z-index: 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #001f4d; /* dark blue header */
+            z-index: 2;
+            position: relative;
+        }
+
+        .logo a {
+            color: #00d4ff;
+            font-weight: 700;
+            font-size: 1.6rem;
+            text-decoration: none;
+        }
+
+        nav a {
+            margin-left: 1.5rem;
+            color: #fff;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #00d4ff;
+        }
+
+        main {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+            padding: 3rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: #00d4ff;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(0, 50, 100, 0.7); /* dark blue card */
+            padding: 1.5rem;
+            border-radius: 12px;
+            width: 250px;
+            text-align: left;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .feature-card h3 {
+            color: #00d4ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: #f0f0f0;
+            line-height: 1.4;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #001f4d; /* dark blue footer */
+            font-size: 0.9rem;
+            z-index: 2;
+            position: relative;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media(max-width:768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .feature-card {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo"><a href="/">← Home</a></div>
+        <nav>
+            <a href="/owner_register">Register</a>
+            <a href="/owner_login">Login</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="hero">
+            <h1>Owner Module</h1>
+            <p>Manage secure file uploads and access requests. Encrypt files and hide them using steganography for secure sharing with Users.</p>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <h3>Register & Login</h3>
+                <p>Create an account and log in securely to manage your files and user requests.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Upload Files</h3>
+                <p>Upload files which are encrypted and hidden within images for safe sharing.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Manage Requests</h3>
+                <p>View incoming requests from Users and accept or reject them securely.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Secure File Sharing</h3>
+                <p>Ensure that shared files are protected with cryptography and steganography techniques.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        © 2025 Dual-Layer Security Project — Owner Module
+    </footer>
+</body>
+
+</html>
